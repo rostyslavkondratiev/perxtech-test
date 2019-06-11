@@ -50,7 +50,6 @@ export class TableFiltersComponent implements AfterViewInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(value => {
-        console.log(value);
         this.dataSource.setFilters({...value});
       });
   }
