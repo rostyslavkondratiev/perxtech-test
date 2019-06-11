@@ -1,3 +1,56 @@
-<p>
-  books works!
-</p>
+<app-header></app-header>
+
+<div class="books">
+    <app-table-filters [dataSource]="dataSource">
+        <ng-container *appTableFilter="'name'; let filter">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input type="text" matInput [formControl]="filter">
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *appTableFilter="'type'; let filter">
+            <mat-form-field>
+                <mat-label>Type</mat-label>
+                <mat-select [formControl]="filter">
+                    <mat-option [value]="null">None</mat-option>
+                    <mat-option value="hard cover">Hard Cover</mat-option>
+                    <mat-option value="soft cover">Soft Cover</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+    </app-table-filters>
+
+    <table mat-table matSort [dataSource]="dataSource" class="book-table">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Name</th>
+            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef> Preview</th>
+            <td mat-cell *matCellDef="let row" class="book-preview"><img [src]="row.image">
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="type"> Type</th>
+            <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="created_at"> Creation Date</th>
+            <td mat-cell *matCellDef="let row"> {{row.created_at | date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="updated_at">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="updated_at"> Update Date</th>
+            <td mat-cell *matCellDef="let row"> {{row.updated_at | date}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </table>
+
+</div>
